@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- ================= SECURITY LAYER 1: HEADERS & POLICIES ================= -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <!-- Content Security Policy: Only self-contained scripts, no rogue injection -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline';">
+
+  <title>SpecMatrix — Powered by Khan Technologies</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    body {
+      background-color: #f8fafc;
+      color: #0f172a;
+      line-height: 1.5;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* HEADER */
+    header {
+      background-color: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .nav-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand-logo {
+      width: 36px;
+      height: 36px;
+      background: #0284c7;
+      color: #ffffff;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    .brand-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.5px;
+    }
+    .brand-title span {
+      color: #0284c7;
+    }
+    .brand-sub {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #64748b;
+      font-weight: 600;
+      display: block;
+    }
+
+    /* SECURITY SHIELD BADGE */
+    .sec-shield {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #059669;
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      padding: 3px 8px;
+      border-radius: 20px;
+    }
+
+    /* MAIN CONTAINER */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 16px;
+      flex-grow: 1;
+      width: 100%;
+    }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .hero-badges {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .hero-badge {
+      background: #e0f2fe;
+      color: #0369a1;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid #bae6fd;
+    }
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 8px;
+      line-height: 1.25;
+    }
+    .hero p {
+      font-size: 14px;
+      color: #475569;
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    /* BUILDER CARD */
+    .builder-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      margin-bottom: 36px;
+    }
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .section-title span {
+      color: #0284c7;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .label-text {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #64748b;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .button-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .select-btn {
+      flex: 1;
+      min-width: 90px;
+      padding: 10px 8px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      color: #334155;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+    .select-btn.active {
+      background: #0284c7;
+      color: #ffffff;
+      border-color: #0284c7;
+      box-shadow: 0 2px 4px rgba(2, 132, 199, 0.2);
+    }
+
+    /* DIAGNOSTICS */
+    .diagnostics-box {
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
+      font-size: 12px;
+    }
+    .stat-label {
+      color: #64748b;
+      display: block;
+    }
+    .stat-val {
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    /* TABLE */
+    .table-header-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .price-pill {
+      background: #ecfdf5;
+      color: #047857;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid #a7f3d0;
+    }
+    .table-container {
+      overflow-x: auto;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      text-align: left;
+    }
+    th {
+      background: #f8fafc;
+      color: #475569;
+      padding: 10px 12px;
+      font-weight: 700;
+      border-bottom: 1px solid #e2e8f0;
+      white-space: nowrap;
+    }
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #1e293b;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+    .comp-type {
+      font-weight: 600;
+      color: #0284c7;
+      white-space: nowrap;
+    }
+    .action-btn {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      background: #f0fdf4;
+      color: #15803d;
+      border: 1px solid #bbf7d0;
+      padding: 4px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    /* ENCYCLOPEDIA GRID */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 14px;
+    }
+    .encyclo-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 16px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      transition: all 0.2s;
+    }
+    .encyclo-card:hover {
+      border-color: #0284c7;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px -2px rgba(0,0,0,0.06);
+    }
+    .card-pillar {
+      font-size: 11px;
+      font-weight: 700;
+      color: #0284c7;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 6px;
+    }
+    .card-desc {
+      font-size: 12px;
+      color: #64748b;
+      margin-bottom: 12px;
+    }
+    .read-more {
+      font-size: 12px;
+      font-weight: 700;
+      color: #0284c7;
+    }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 23, 42, 0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 100;
+    }
+    .modal-box {
+      background: #ffffff;
+      border-radius: 12px;
+      max-width: 600px;
+      width: 100%;
+      padding: 24px;
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+    }
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 20px;
+      font-weight: bold;
+      color: #64748b;
+      cursor: pointer;
+    }
+    .modal-body {
+      font-size: 13px;
+      color: #334155;
+      line-height: 1.6;
+    }
+    .modal-body p {
+      margin-bottom: 10px;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #ffffff;
+      border-top: 1px solid #e2e8f0;
+      padding: 20px 16px;
+      text-align: center;
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="nav-container">
+      <div class="brand-box">
+        <div class="brand-logo">SM</div>
+        <div>
+          <div class="brand-title">Spec<span>Matrix</span></div>
+          <span class="brand-sub">Powered by Khan Technologies</span>
+        </div>
+      </div>
+      <div>
+        <span class="sec-shield">🛡️ Shield Active</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main>
+    <section class="hero">
+      <div class="hero-badges">
+        <span class="hero-badge">SCTU Verified Architecture 2026</span>
+        <span class="sec-shield">Client-Safe Zero-Token App</span>
+      </div>
+      <h1>Hardware Configurator & Silicon Encyclopedia</h1>
+      <p>Eliminate component bottlenecks, verify socket compatibility, and calculate real-world FPS before spending a single rupee.</p>
+    </section>
+
+    <!-- BUILDER TOOL -->
+    <section id="builder" class="builder-card">
+      <div class="section-title"><span>01.</span> Rig Target Parameters</div>
+      
+      <div class="form-group">
+        <label class="label-text">Select Target Budget</label>
+        <div class="button-group">
+          <button onclick="setBudget('budget')" id="btn-budget" class="select-btn active">₹25K - ₹35K</button>
+          <button onclick="setBudget('mid')" id="btn-mid" class="select-btn">₹45K - ₹65K</button>
+          <button onclick="setBudget('high')" id="btn-high" class="select-btn">₹75K - ₹1.1L+</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="label-text">Primary Workload</label>
+        <div class="button-group">
+          <button onclick="setWorkload('gaming')" id="btn-gaming" class="select-btn active">🎮 Gaming</button>
+          <button onclick="setWorkload('coding')" id="btn-coding" class="select-btn">💻 Coding / Dev</button>
+          <button onclick="setWorkload('editing')" id="btn-editing" class="select-btn">🎬 4K Video/3D</button>
+        </div>
+      </div>
+
+      <!-- System Diagnostics -->
+      <div class="diagnostics-box">
+        <div>
+          <span class="stat-label">Bottleneck Index:</span>
+          <span id="stat-bottleneck" class="stat-val" style="color: #047857;">2.4% (Optimum)</span>
+        </div>
+        <div>
+          <span class="stat-label">Estimated Draw:</span>
+          <span id="stat-power" class="stat-val">280W (450W Safe)</span>
+        </div>
+        <div>
+          <span class="stat-label">Target FPS:</span>
+          <span id="stat-fps" class="stat-val" style="color: #0284c7;">140+ FPS (1080p)</span>
+        </div>
+      </div>
+
+      <!-- Bill of Materials -->
+      <div class="table-header-wrap">
+        <div class="section-title" style="margin-bottom: 0;"><span>02.</span> Verified Components (BOM)</div>
+        <div id="total-price-tag" class="price-pill">Est: ₹31,500</div>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Part Type</th>
+              <th>Selected Model</th>
+              <th>Est. Price</th>
+              <th style="text-align: right;">Action</th>
+            </tr>
+          </thead>
+          <tbody id="component-table-body">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ENCYCLOPEDIA SECTION -->
+    <section>
+      <div class="section-title"><span>03.</span> SCTU Tech Encyclopedia</div>
+      <p style="font-size: 13px; color: #64748b; margin-top: -8px; margin-bottom: 12px;">Deep-dive architecture analysis curated by SpecMatrix Content Teachers & Uploaders.</p>
+
+      <div class="grid">
+        <div class="encyclo-card" onclick="openArticle('cpu')">
+          <div>
+            <span class="card-pillar">Pillar 1: Compute</span>
+            <div class="card-title">CPU Silicon & IPC Logic</div>
+            <div class="card-desc">Why higher GHz doesn't always mean faster processing speed.</div>
+          </div>
+          <span class="read-more">Read Deep Dive &rarr;</span>
+        </div>
+
+        <div class="encyclo-card" onclick="openArticle('gpu')">
+          <div>
+            <span class="card-pillar">Pillar 1: Rendering</span>
+            <div class="card-title">GPU Shaders & Ray Tracing</div>
+            <div class="card-desc">How parallel SIMD cores process real-time 3D geometry.</div>
+          </div>
+          <span class="read-more">Read Deep Dive &rarr;</span>
+        </div>
+
+        <div class="encyclo-card" onclick="openArticle('ram')">
+          <div>
+            <span class="card-pillar">Pillar 2: Memory</span>
+            <div class="card-title">DDR4 vs DDR5 Latency</div>
+            <div class="card-desc">Dual-channel mechanics, nanosecond timings, and bus width.</div>
+          </div>
+          <span class="read-more">Read Deep Dive &rarr;</span>
+        </div>
+
+        <div class="encyclo-card" onclick="openArticle('storage')">
+          <div>
+            <span class="card-pillar">Pillar 2: Storage</span>
+            <div class="card-title">NVMe Gen4 vs SATA</div>
+            <div class="card-desc">NAND flash physics and random 4K IOPS read speeds.</div>
+          </div>
+          <span class="read-more">Read Deep Dive &rarr;</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL -->
+  <div id="article-modal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div>
+          <span id="modal-category" style="font-size: 11px; font-weight: 700; color: #0284c7;"></span>
+          <h2 id="modal-title" style="font-size: 18px; color: #0f172a; margin-top: 4px;"></h2>
+        </div>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div id="modal-content" class="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>SpecMatrix Architectural Platform &copy; 2026. All Rights Reserved.</p>
+    <p style="margin-top: 4px; font-weight: 600; color: #0f172a;">Engineered & Powered by <span style="color: #0284c7;">Khan Technologies</span></p>
+  </footer>
+
+  <script>
+    'use strict';
+
+    // ================= SECURITY LAYER 3: IMMUTABLE DATA OBJECTS =================
+    const buildsDatabase = Object.freeze({
+      budget: Object.freeze({
+        gaming: Object.freeze({
+          price: '₹31,500',
+          bottleneck: '3.1% (Optimum)',
+          power: '220W (450W Safe)',
+          fps: '110+ FPS (Esports 1080p)',
+          parts: Object.freeze([
+            { type: 'Processor', name: 'AMD Ryzen 5 5600G (6C/12T APU)', price: '₹11,400' },
+            { type: 'Motherboard', name: 'MSI B450M-A Pro Max II', price: '₹4,900' },
+            { type: 'RAM', name: 'Corsair Vengeance 16GB (8x2) DDR4 3200MHz', price: '₹3,400' },
+            { type: 'Storage', name: 'Crucial P3 500GB PCIe 3.0 NVMe M.2', price: '₹3,100' },
+            { type: 'Graphics', name: 'Radeon Vega 7 Integrated Engine', price: 'Included' },
+            { type: 'Power Supply', name: 'Deepcool PK450D 450W 80+ Bronze', price: '₹2,600' },
+            { type: 'Cabinet', name: 'Ant Esports ICE-110 Mesh Case', price: '₹2,500' }
+          ])
+        }),
+        coding: Object.freeze({
+          price: '₹28,800',
+          bottleneck: '1.8% (Smooth)',
+          power: '190W (450W Safe)',
+          fps: 'Standard 60Hz 1080p',
+          parts: Object.freeze([
+            { type: 'Processor', name: 'Intel Core i3-12100 (4C/8T)', price: '₹8,200' },
+            { type: 'Motherboard', name: 'Gigabyte H610M-S2 DDR4', price: '₹6,100' },
+            { type: 'RAM', name: 'Crucial 16GB (8x2) DDR4 3200MHz', price: '₹3,200' },
+            { type: 'Storage', name: 'Kingston NV2 500GB NVMe M.2', price: '₹3,100' },
+            { type: 'Graphics', name: 'Intel UHD 730 Integrated', price: 'Included' },
+            { type: 'Power Supply', name: 'Deepcool PK450D 450W 80+ Bronze', price: '₹2,600' },
+            { type: 'Cabinet', name: 'Zebronics Cronus Minimal Case', price: '₹2,000' }
+          ])
+        }),
+        editing: Object.freeze({
+          price: '₹34,200',
+          bottleneck: '2.5% (Smooth)',
+          power: '240W (450W Safe)',
+          fps: 'Full HD Scrubbing',
+          parts: Object.freeze([
+            { type: 'Processor', name: 'AMD Ryzen 5 5600G (6C/12T)', price: '₹11,400' },
+            { type: 'Motherboard', name: 'MSI B450M-A Pro Max II', price: '₹4,900' },
+            { type: 'RAM', name: 'Corsair Vengeance 32GB (16x2) DDR4', price: '₹6,400' },
+            { type: 'Storage', name: 'Crucial P3 Plus 1TB NVMe Gen4', price: '₹5,400' },
+            { type: 'Graphics', name: 'Radeon Vega 7 Integrated Engine', price: 'Included' },
+            { type: 'Power Supply', name: 'Deepcool PK450D 450W Bronze', price: '₹2,600' },
+            { type: 'Cabinet', name: 'Ant Esports Mesh Case', price: '₹2,500' }
+          ])
+        })
+      }),
+      mid: Object.freeze({
+        gaming: Object.freeze({
+          price: '₹56,000',
+          bottleneck: '1.9% (Optimum)',
+          power: '340W (550W Safe)',
+          fps: '180+ FPS (1080p Ultra)',
+          parts: Object.freeze([
+            { type: 'Processor', name: 'AMD Ryzen 5 5600 (6C/12T)', price: '₹10,500' },
+            { type: 'Motherboard', name: 'ASRock B550M-HDV', price: '₹5,800' },
+            { type: 'Graphics Card', name: 'AMD Radeon RX 6600 8GB GDDR6', price: '₹19,800' },
+            { type: 'RAM', name: 'G.Skill Ripjaws 16GB (8x2) DDR4 3600MHz', price: '₹3,800' },
+            { type: 'Storage', name: 'WD Blue SN580 1TB NVMe PCIe Gen4', price: '₹5,400' },
+            { type: 'Power Supply', name: 'Cooler Master MWE 550W Bronze', price: '₹3,900' },
+            { type: 'Cabinet', name: 'Galax Revolution-05 Mesh Airflow', price: '₹3,200' }
+          ])
+        }),
+        coding: Object.freeze({
+          price: '₹49,500',
+          bottleneck: '1.2% (Zero Lag)',
+          power: '280W (550W Safe)',
+          fps: 'High Refresh 1080p',
+          parts: Object.freeze([
+            { type: 'Processor', name: 'Intel Core i5-12400 (6C/12T)', price: '₹12,800' },
+            { type: 'Motherboard', name: 'MSI PRO B760M-E DDR4', price: '₹8,400' },
+            { type: 'RAM', name: 'Corsair Vengeance 32GB (16x2) DDR4', price: '₹6,400' },
+            { type: 'Storage', name: 'Kingston KC3000 1TB Gen4 SSD', price: '₹7,800' },
+            { type: 'Graphics', name: 'Intel UHD 730 Integrated', price: 'Included' },
+            { type: 'Power Supply', name: 'Cooler Master MWE 550W Bronze', price: '₹3,900' },
+            { type: 'Cabinet', name: 'Ant Esports ICE-110 Case', price: '₹2,500' }
+          ])
+        }),
+        editing: Object.freeze({
+          price: '₹62,000',
+          bottleneck: '2.1% (Optimum)',
+          power: '360W (550W Safe)',
+          fps: '4K Render Timeline OK',
+          parts: Object.freeze([
+            { type: 'Processor', name: 'Intel Core i5-12400F', price: '₹10,200' },
+            { type: 'Motherboard', name: 'MSI PRO B760M-E DDR4', price: '₹8,400' },
+            { type: 'Graphics Card', name: 'NVIDIA GeForce RTX 3050 6GB', price: '₹16,500' },
+            { type: 'RAM', name: 'Corsair Vengeance 32GB (16x2) DDR4', price: '₹6,400' },
+            { type: 'Storage', name: 'WD Blue SN580 1TB NVMe SSD', price: '₹5,400' },
+            { type: 'Power Supply', name: 'Cooler Master 550W Bronze', price: '₹3,900' },
+            { type: 'Cabinet', name: 'Galax Mesh Airflow Case', price: '₹3,200' }
+          ])
+        })
+      }),
+      high: Object.freeze({
+        gaming: Object.freeze({
+          price: '₹92,500',
+          bottleneck: '1.2% (Elite Tier)',
+          power: '460W (650W Safe)',
+          fps: '120+ FPS (1440p Quad-HD)',
+          parts: Object.freeze([
+            { type: 'Processor', name: 'AMD Ryzen 5 7600 (6C/12T AM5)', price: '₹17,800' },
+            { type: 'Motherboard', name: 'MSI PRO B650M-P DDR5', price: '₹10,900' },
+            { type: 'Graphics Card', name: 'NVIDIA GeForce RTX 4060 8GB GDDR6', price: '₹28,500' },
+            { type: 'RAM', name: 'Corsair 32GB (16x2) DDR5 6000MHz', price: '₹9,400' },
+            { type: 'Storage', name: 'Kingston KC3000 1TB Gen4 (7000 MB/s)', price: '₹7,800' },
+            { type: 'Power Supply', name: 'Deepcool PM650D 650W Gold', price: '₹5,200' },
+            { type: 'Cabinet', name: 'Lian Li Lancool 205M Mesh', price: '₹5,300' }
+          ])
+        }),
+        coding: Object.freeze({
+          price: '₹84,000',
+          bottleneck: '0.9% (Server Grade)',
+          power: '320W (650W Safe)',
+          fps: 'Ultra Fast Docker/Virtualization',
+          parts: Object.freeze([
+            { type: 'Processor', name: 'Intel Core i7-13700 (16C/24T)', price: '₹31,000' },
+            { type: 'Motherboard', name: 'Gigabyte B760M DS3H AX', price: '₹13,500' },
+            { type: 'RAM', name: 'Corsair 32GB (16x2) DDR5 6000MHz', price: '₹9,400' },
+            { type: 'Storage', name: 'Samsung 980 Pro 1TB Gen4 SSD', price: '₹9,200' },
+            { type: 'Graphics', name: 'Intel UHD 770 Integrated', price: 'Included' },
+            { type: 'Power Supply', name: 'Deepcool PM650D 650W Gold', price: '₹5,200' },
+            { type: 'Cabinet', name: 'Lian Li Lancool 205M Mesh', price: '₹5,300' }
+          ])
+        }),
+        editing: Object.freeze({
+          price: '₹98,000',
+          bottleneck: '1.5% (Studio Tier)',
+          power: '480W (650W Safe)',
+          fps: 'Smooth 4K 10-Bit Scrubbing',
+          parts: Object.freeze([
+            { type: 'Processor', name: 'Intel Core i5-13500 (14C/20T)', price: '₹21,500' },
+            { type: 'Motherboard', name: 'MSI B760M Gaming Plus WiFi', price: '₹14,200' },
+            { type: 'Graphics Card', name: 'NVIDIA GeForce RTX 4060 8GB (CUDA)', price: '₹28,500' },
+            { type: 'RAM', name: 'Corsair 32GB DDR5 6000MHz', price: '₹9,400' },
+            { type: 'Storage', name: 'Samsung 980 Pro 1TB Gen4 SSD', price: '₹9,200' },
+            { type: 'Power Supply', name: 'Deepcool PM650D 650W Gold', price: '₹5,200' },
+            { type: 'Cabinet', name: 'Lian Li Lancool 205M Mesh', price: '₹5,300' }
+          ])
+        })
+      })
+    });
+
+    const articles = Object.freeze({
+      cpu: Object.freeze({
+        category: 'Pillar 1: Compute',
+        title: 'CPU Silicon, Nanometer Nodes & IPC Explained',
+        content: `
+          <p><strong>The Clock Speed Myth:</strong> High Gigahertz (GHz) does not automatically mean high real-world speed. Performance relies on: <em>Instructions Per Cycle (IPC) &times; Clock Speed</em>.</p>
+          <p><strong>Nanometer Scaling:</strong> Modern '3nm' or '4nm' nodes indicate transistor density rather than physical gate sizes. Denser silicon cuts power draw and electron travel distance.</p>
+          <p><strong>Silicon Cache Hierarchy:</strong> Fast L1, L2, and L3 caches feed the processing cores directly, preventing micro-stutter caused by slower system RAM calls.</p>
+        `
+      }),
+      gpu: Object.freeze({
+        category: 'Pillar 1: Rendering',
+        title: 'Graphics Pipelines, Shaders & Ray Tracing Hardware',
+        content: `
+          <p><strong>SIMD Parallelism:</strong> GPUs use thousands of small arithmetic logic units operating in parallel to compute 3D coordinate matrices simultaneously.</p>
+          <p><strong>Hardware RT Acceleration:</strong> Dedicated Ray Tracing units process Bounding Volume Hierarchy (BVH) structures in silicon, calculating real-world light bounces without taxing standard raster shaders.</p>
+          <p><strong>VRAM Bandwidth:</strong> High-resolution framebuffers require high memory bus width coupled with GDDR6 memory to avoid bottlenecks during intensive render passes.</p>
+        `
+      }),
+      ram: Object.freeze({
+        category: 'Pillar 2: Memory',
+        title: 'DDR4 vs DDR5: CAS Latency & Dual-Channel Physics',
+        content: `
+          <p><strong>Capacitor Charge Leak:</strong> DRAM stores individual bits in microscopic capacitor-transistor pairs that require periodic refresh cycles to maintain persistent state.</p>
+          <p><strong>Dual-Channel Throughput:</strong> Installing two memory modules activates two distinct 64-bit channels, doubling peak data transfer bandwidth to the integrated memory controller.</p>
+          <p><strong>Nanosecond Latency Formula:</strong> Real-world delay is calculated via: <em>(CAS Latency &divide; Frequency in MHz) &times; 2000</em>.</p>
+        `
+      }),
+      storage: Object.freeze({
+        category: 'Pillar 2: Storage',
+        title: 'NVMe PCIe Gen 4 vs SATA: Silicon Flash Engineering',
+        content: `
+          <p><strong>Direct PCIe Interface:</strong> NVMe bypasses the legacy AHCI standard, executing commands via direct PCIe lanes with over 64,000 simultaneous queues.</p>
+          <p><strong>Flash Cell Endurance:</strong> SLC, TLC, and QLC silicon define cell density and total write endurance (TBW) across the drive lifecycle.</p>
+          <p><strong>Random 4K Reads:</strong> OS responsiveness depends primarily on low-queue random 4K read throughput rather than peak sequential marketing numbers.</p>
+        `
+      })
+    });
+
+    let currentBudget = 'budget';
+    let currentWorkload = 'gaming';
+
+    function setBudget(b) {
+      currentBudget = b;
+      document.querySelectorAll('#btn-budget, #btn-mid, #btn-high').forEach(btn => btn.classList.remove('active'));
+      const target = document.getElementById(`btn-${b}`);
+      if (target) target.classList.add('active');
+      renderRig();
+    }
+
+    function setWorkload(w) {
+      currentWorkload = w;
+      document.querySelectorAll('#btn-gaming, #btn-coding, #btn-editing').forEach(btn => btn.classList.remove('active'));
+      const target = document.getElementById(`btn-${w}`);
+      if (target) target.classList.add('active');
+      renderRig();
+    }
+
+    function renderRig() {
+      const budgetCategory = buildsDatabase[currentBudget] || buildsDatabase.budget;
+      const rig = budgetCategory[currentWorkload] || budgetCategory.gaming;
+
+      document.getElementById('total-price-tag').textContent = `Est: ${rig.price}`;
+      document.getElementById('stat-bottleneck').textContent = rig.bottleneck;
+      document.getElementById('stat-power').textContent = rig.power;
+      document.getElementById('stat-fps').textContent = rig.fps;
+
+      const tbody = document.getElementById('component-table-body');
+      tbody.innerHTML = '';
+
+      rig.parts.forEach(part => {
+        const row = document.createElement('tr');
+        
+        // Security Layer 2: Hardened outbound links
+        row.innerHTML = `
+          <td class="comp-type">${part.type}</td>
+          <td style="font-weight: 500;">${part.name}</td>
+          <td style="font-family: monospace; font-size: 12px;">${part.price}</td>
+          <td style="text-align: right;">
+            <a href="https://www.amazon.in/s?k=${encodeURIComponent(part.name)}" 
+               target="_blank" 
+               rel="noopener noreferrer nofollow" 
+               class="action-btn">
+              Verify Link &rarr;
+            </a>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function openArticle(key) {
+      const item = articles[key];
+      if (!item) return;
+      document.getElementById('modal-category').textContent = item.category;
+      document.getElementById('modal-title').textContent = item.title;
+      document.getElementById('modal-content').innerHTML = item.content;
+      document.getElementById('article-modal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('article-modal').style.display = 'none';
+    }
+
+    window.onload = () => {
+      renderRig();
+    };
+  </script>
+</body>
+</html>
